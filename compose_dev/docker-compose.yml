@@ -1,0 +1,62 @@
+# Ports assign to this project 3000
+version: "3"
+
+# volumes:
+#   mongo_data_srw: {}
+
+services:
+  # mongo_srw:
+  #   container_name: mongo_srw
+  #   image: mongo:4.0.14
+  #   ports:
+  #     - 27017:27017
+  #   environment:
+  #     MONGO_INITDB_ROOT_USERNAME: userx
+  #     MONGO_INITDB_ROOT_PASSWORD: ******
+  #     ENV: development
+  #   volumes:
+  #     - mongo_data_srw:/data/db
+  #     - /etc/localtime:/etc/localtime:ro
+
+  # apigateway_srw:
+  #   container_name: apigateway_srw
+  #   build: ../containers/apigateway_srw
+  #   ports:
+  #     - 6000:6000
+  #   environment:
+  #     ENV: development
+  #   volumes:
+  #     - /app/node_modules
+  #     - ../containers/apigateway_srw/:/app
+  #     - ../.env:/app/.env
+  #   command: ["yarn", "dev"]
+
+  backend_srw:
+    container_name: backend_srw
+    build: ../containers/backend_srw
+    ports:
+      - 3010:3010
+    environment:
+      ENV: development
+    volumes:
+      - /app/node_modules
+      - ../containers/backend_srw:/app
+      - ../.env:/app/.env
+    # depends_on:
+    #   - mongo_srw
+    command: ["yarn", "dev"]
+
+  frontend_srw:
+    container_name: frontend_srw
+    build: ../containers/frontend_srw
+    ports:
+      - 3000:3000
+    environment:
+      REACT_APP_ENV: development
+    volumes:
+      - /app/node_modules
+      - ../containers/frontend_srw:/app
+      - ../.env:/app/.env
+    # depends_on:
+    #   - mongo_srw
+    command: ["yarn", "start"]
