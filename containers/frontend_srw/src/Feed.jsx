@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+/*eslint-disable*/
+import React from "react";
 
 export const Feed = ({ title, link, date, contentSnippet, categories }) => {
   const formatted = {
@@ -8,10 +9,6 @@ export const Feed = ({ title, link, date, contentSnippet, categories }) => {
   };
 
   const articleDate = new Date(date).toLocaleDateString("en-GB", formatted);
-
-  useEffect(() => {
-    console.log(categories);
-  }, []);
 
   return (
     <>
@@ -33,11 +30,21 @@ export const Feed = ({ title, link, date, contentSnippet, categories }) => {
         </p>
         <p>
           <strong>Contenido: </strong>
-          {contentSnippet} <a href={link}>Leer más</a>
+          {contentSnippet.replace("Leer", "")}{" "}
+          <a
+            href={link}
+            style={{
+              color: "red",
+              textDecoration: "underline",
+              cursor: "pointer",
+            }}
+          >
+            Leer más
+          </a>
         </p>
         <p>
           <strong>Fecha: </strong>
-          {date}
+          {articleDate}
         </p>
       </div>
     </>
